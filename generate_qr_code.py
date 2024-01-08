@@ -109,5 +109,26 @@ background_img.paste(img, (0, 0), img)
 # Show the final result
 show_qr(background_img)
 
+# taking image which user wants 
+# in the QR code center
+Logo_link = 'favicon.png'
+ 
+logo = Image.open(Logo_link)
+
+basewidth = 100
+
+# adjust image size
+wpercent = (basewidth/float(logo.size[0]))
+hsize = int((float(logo.size[1])*float(wpercent)))
+logo = logo.resize((basewidth, hsize), Image.LANCZOS)
+QRcode = qrcode.QRCode(
+    error_correction=qrcode.constants.ERROR_CORRECT_H
+)
+
+# set size of QR code
+pos = ((img.size[0] - logo.size[0]) // 2,
+       (img.size[1] - logo.size[1]) // 2)
+img.paste(logo, pos)
+
 # Save the QR code with a transparent background
 img.save('circl_qr_code.png', "PNG", quality=100)
